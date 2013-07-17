@@ -1,0 +1,50 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <title>QRMirror</title>
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cleartype" content="on">
+  <style>
+  body{ font-family: Helvetica, sans-serif; }
+  #container{ width: 100%; position: relative;}
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="loading">
+      <h1>Wait a sec...</h1>
+      <img src="http://www.albumspinner.com/images/animated_progress.gif" />  
+    </div>
+    <div id="photo" style="display: none;">
+      <h1>Nice QR face.</h1>
+      <img id="target-image" src="" />
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>
+
+    var capTriggerURL = 'http://localhost:8080/photo.json';
+
+    var requestCapture = function(url){
+      $.getJSON(url, function(data){
+        var capture_url = data[1];
+        $('#target-image').load(function(){
+          $('#loading').hide();
+          $('#photo').show();
+        });
+        $('#target-image').error(function(){
+          setTimeout("$('#target-image').attr('src', '" + capture_url + "');", 100);
+        });
+        $('#target-image').attr('src', capture_url);
+      });
+    }
+
+    $(document).ready(function(){ requestCapture(capTriggerURL); });
+  </script>
+</body>
+</html>

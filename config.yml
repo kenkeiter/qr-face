@@ -1,0 +1,21 @@
+# We'll be serving from http://localhost:8080/photo.json
+
+# Configure ec2 parameters allowing upload of photos
+amazon_ec2:
+  bucket_name: <bucket>
+  key_id: <key>
+  secret_key: <secret>
+
+# Define capture parameters -- where to capture motion jpegs from, and which
+# credentials to login with.
+capture_source:
+  url: http://172.16.0.21/video3.mjpg
+  username: <user>
+  password: <pass>
+  buffer_length: 120 # frames
+
+# Configure the trigger server
+server:
+  host: 0.0.0.0
+  port: 8080
+  static_path: ./static
